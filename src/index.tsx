@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider as StoreProvider } from 'react-redux';
 import ThemeProvider from './providers/ThemeProvider';
 import { initializeApp } from 'firebase/app';
 import App from './App';
+import store from './slices';
 import CssBaseline from '@mui/material/CssBaseline';
 import './index.css';
 
@@ -19,9 +21,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
+    <StoreProvider store={store}>
       <ThemeProvider>
         <CssBaseline />
         <App />
       </ThemeProvider>
+    </StoreProvider>
   </React.StrictMode>
 );
