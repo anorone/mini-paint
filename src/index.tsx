@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import ThemeProvider from './providers/ThemeProvider';
 import { initializeApp } from 'firebase/app';
 import App from './App';
+import CssBaseline from '@mui/material/CssBaseline';
 import './index.css';
 
 const firebaseConfig = JSON.parse(
@@ -17,6 +19,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App />
+      <ThemeProvider>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
   </React.StrictMode>
 );
