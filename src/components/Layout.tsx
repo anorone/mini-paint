@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import { ThemeSwitch } from './';
 import type { BoxProps } from '@mui/material/Box';
 
 const App = (props: BoxProps) => (
@@ -26,6 +27,7 @@ const Header = (props: BoxProps) => (
     {...props}
   >
     {props.children}
+    <ThemeSwitch sx={{ ml: 'auto', color: 'text.primary' }} />
   </Box>
 );
 
