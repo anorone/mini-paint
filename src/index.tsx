@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider as StoreProvider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
 import ThemeProvider from './providers/ThemeProvider';
 import { initializeApp } from 'firebase/app';
-import App from './App';
 import store from './slices';
+import router from './routes';
 import CssBaseline from '@mui/material/CssBaseline';
 import './index.css';
 
@@ -29,7 +30,7 @@ root.render(
     <StoreProvider store={store}>
       <ThemeProvider>
         <CssBaseline />
-        <App />
+        <RouterProvider router={router} />
       </ThemeProvider>
     </StoreProvider>
   </React.StrictMode>
