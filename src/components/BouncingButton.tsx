@@ -13,13 +13,11 @@ const cssAnimation = {
       transform: 'scale(1)',
     },
   },
-  animation: 'bounce 3.5s ease-out infinite',
+  animation: 'bounce 3s ease-out infinite',
 };
 
-const BouncingButton = (props: ButtonProps) => (
-  <Button sx={cssAnimation} {...props}>
-    {props.children}
-  </Button>
-);
+const BouncingButton = <L extends React.ElementType>(
+  props: ButtonProps<L, { component: L }>
+) => <Button sx={cssAnimation} {...props} />;
 
 export default BouncingButton;

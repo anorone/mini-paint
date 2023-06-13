@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { Header, Main, Footer, BouncingButton } from '../components';
 
@@ -17,7 +18,9 @@ const WelcomePage = () => (
       <Typography paragraph mb={3} fontSize={{ xs: null, sm: '1.25rem' }}>
         stay alone with your endless imagination
       </Typography>
-      <BouncingButton variant="contained">Start Now</BouncingButton>
+      <BouncingButton variant="contained" component={Link} to="auth">
+        Start Now
+      </BouncingButton>
     </Main>
     <Footer />
   </>
