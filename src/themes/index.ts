@@ -1,9 +1,9 @@
-import { PaletteMode } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { pink, blueGrey } from '@mui/material/colors';
 import { deepmerge } from '@mui/utils';
 import darkPalette from './dark';
 import lightPalette from './light';
+import type { PaletteMode } from '@mui/material';
 
 const generalPalette = {
   palette: {
