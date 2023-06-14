@@ -53,7 +53,10 @@ const Footer = (props: BoxProps) => (
       }}
     >
       View the{' '}
-      <Link color="text.primary" href="https://github.com/anorone/mini-paint">
+      <Link
+        color="text.primary"
+        href="https://github.com/anorone/mini-paint/tree/dev"
+      >
         source code
       </Link>
     </Typography>
