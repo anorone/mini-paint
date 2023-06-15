@@ -1,4 +1,4 @@
-import { ThemeProvider as ColorThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { useTypedSelector } from '../hooks';
 import getTheme from '../themes';
 
@@ -6,12 +6,9 @@ interface Props {
   children?: React.ReactNode;
 }
 
-const ThemeProvider = ({ children }: Props) => {
+const ColorThemeProvider = (props: Props) => {
   const mode = useTypedSelector((state) => state.theme.mode);
-
-  return (
-    <ColorThemeProvider theme={getTheme(mode)}>{children}</ColorThemeProvider>
-  );
+  return <ThemeProvider theme={getTheme(mode)} {...props} />;
 };
 
-export default ThemeProvider;
+export default ColorThemeProvider;
