@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import { Header, Main, Footer, AuthForm } from '../components';
+import { Link } from 'react-router-dom';
+import { Header, Main, Footer, Logo, AuthForm } from '../components';
 import type { AuthType } from '../components/AuthForm';
 
 const AuthPage = () => {
@@ -26,14 +26,7 @@ const AuthPage = () => {
   return (
     <>
       <Header>
-        <Typography
-          fontWeight="bold"
-          fontStyle="italic"
-          fontSize="24px"
-          letterSpacing="-0.0375em"
-        >
-          Paintter
-        </Typography>
+        <Logo component={Link} to="/" />
       </Header>
       <Main pt={9}>
         <AuthForm
