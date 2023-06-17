@@ -7,7 +7,7 @@ interface Props {
 
 const fontSizes = {
   small: '24px',
-  large: { xs: null, sm: '9rem' },
+  large: { xs: '4.5rem', sm: '9rem' },
 };
 
 const Logo = <L extends React.ElementType>(
