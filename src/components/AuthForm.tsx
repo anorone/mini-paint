@@ -22,10 +22,12 @@ const AuthForm = () => {
   const [authType, setAuthType] = useState<AuthType>('login');
   const { register, handleSubmit } = useForm<SignupFields>();
 
+  const formRef = useRef<HTMLFormElement>(null);
   const nameFieldRef = useRef<HTMLInputElement>(null);
   const mailFieldRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    formRef.current?.reset();
     const fieldRef = authType === 'login' ? mailFieldRef : nameFieldRef;
     fieldRef.current?.focus();
   }, [authType]);
@@ -70,6 +72,7 @@ const AuthForm = () => {
         </Button>
       </Box>
       <Box
+        ref={formRef}
         component="form"
         maxWidth="sm"
         onSubmit={handleSubmit(handlers[authType])}
