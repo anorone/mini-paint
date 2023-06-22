@@ -1,13 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import type { SubmitHandler } from 'react-hook-form';
 
 type AuthType = 'login' | 'signup';
 
+interface LoginFields {
+  email: string;
+  password: string;
+}
+
+interface SignupFields extends LoginFields {
+  firstName: string;
+  lastName: string;
+}
+
 const AuthForm = () => {
   const [authType, setAuthType] = useState<AuthType>('login');
+  const { register, handleSubmit } = useForm<SignupFields>();
 
   const nameFieldRef = useRef<HTMLInputElement>(null);
   const mailFieldRef = useRef<HTMLInputElement>(null);
@@ -17,12 +30,12 @@ const AuthForm = () => {
     fieldRef.current?.focus();
   }, [authType]);
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleLogin: SubmitHandler<LoginFields> = (values) => {
+    console.log(values);
   };
 
-  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSignup: SubmitHandler<SignupFields> = (values) => {
+    console.log(values);
   };
 
   const handlers = {
@@ -56,34 +69,43 @@ const AuthForm = () => {
           Sign Up
         </Button>
       </Box>
-      <Box component="form" maxWidth="sm" onSubmit={handlers[authType]}>
+      <Box
+        component="form"
+        maxWidth="sm"
+        onSubmit={handleSubmit(handlers[authType])}
+      >
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} hidden={authType === 'login'}>
-            <TextField
-              id="first-name"
-              name="first-name"
-              label="First name"
-              inputRef={nameFieldRef}
-              autoComplete="given-name"
-              required
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} hidden={authType === 'login'}>
-            <TextField
-              id="last-name"
-              name="last-name"
-              label="Last name"
-              autoComplete="family-name"
-              required
-              fullWidth
-            />
-          </Grid>
+          {authType === 'signup' && (
+            <Grid item xs={12} sm={6}>
+              <TextField
+                {...register('firstName')}
+                id="first-name"
+                label="First name"
+                inputRef={nameFieldRef}
+                autoComplete="given-name"
+                required
+                fullWidth
+              />
+            </Grid>
+          )}
+          {authType === 'signup' && (
+            <Grid item xs={12} sm={6}>
+              <TextField
+                {...register('lastName')}
+                id="last-name"
+                label="Last name"
+                autoComplete="family-name"
+                required
+                fullWidth
+              />
+            </Grid>
+          )}
           <Grid item xs={12}>
             <TextField
-              id="e-mail"
-              name="e-mail"
+              {...register('email')}
+              id="email"
               label="Email address"
+              type="email"
               inputRef={mailFieldRef}
               autoComplete="email"
               required
@@ -92,10 +114,11 @@ const AuthForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              {...register('password')}
               id="password"
-              name="password"
               label="Password"
               type="password"
+              inputProps={{ minLength: 8 }}
               autoComplete="new-password"
               required
               fullWidth
