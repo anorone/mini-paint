@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { LoginForm, SignupForm } from './';
@@ -6,7 +7,10 @@ import { LoginForm, SignupForm } from './';
 type AuthType = 'login' | 'signup';
 
 const AuthForm = () => {
-  const [authType, setAuthType] = useState<AuthType>('login');
+  const location = useLocation();
+  const [authType, setAuthType] = useState<AuthType>(
+    location.state?.authType ?? 'login'
+  );
 
   return (
     <Box
@@ -40,3 +44,4 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
+export type { AuthType };
