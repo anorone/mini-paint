@@ -9,6 +9,9 @@ const generalPalette = {
   palette: {
     primary: pink,
     secondary: blueGrey,
+    error: {
+      main: '#e34242',
+    },
   },
 };
 
