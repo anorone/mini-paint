@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   getAuth,
+  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
 import { PayloadAction } from '@reduxjs/toolkit';
 import type { User } from 'firebase/auth';
+import type { Dispatch } from './';
 
 interface Auth {
   user: User | null;
@@ -21,6 +23,13 @@ interface Credentials {
 const initialState: Auth = {
   user: null,
   requestStatus: 'idle',
+};
+
+const subscribeToAuthStateChange = () => (dispatch: Dispatch) => {
+  const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+    dispatch(setUser(user));
+  });
+  return unsubscribe;
 };
 
 const logIn = createAsyncThunk(
@@ -76,5 +85,5 @@ const authSlice = createSlice({
 });
 
 export const { setUser, resetRequestStatus } = authSlice.actions;
-export { logIn, signUp, logOut };
+export { subscribeToAuthStateChange, logIn, signUp, logOut };
 export default authSlice.reducer;
