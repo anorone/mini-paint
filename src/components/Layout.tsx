@@ -1,7 +1,11 @@
+import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import { ThemeSwitch } from './';
+import Anchor from '@mui/material/Link';
+import Avatar from '@mui/material/Avatar';
+import { useTypedSelector } from '../hooks';
+import { LogoutButton, ThemeSwitch } from './';
+import { routes } from '../routes';
 import type { BoxProps } from '@mui/material/Box';
 
 const App = (props: BoxProps) => (
@@ -15,21 +19,36 @@ const App = (props: BoxProps) => (
   />
 );
 
-const Header = (props: BoxProps) => (
-  <Box
-    sx={{
-      display: 'flex',
-      alignItems: 'center',
-      minHeight: 60,
-      py: 1,
-    }}
-    component="header"
-    {...props}
-  >
-    {props.children}
-    <ThemeSwitch sx={{ ml: 'auto', color: 'text.primary' }} />
-  </Box>
-);
+const Header = (props: BoxProps) => {
+  const user = useTypedSelector((state) => state.auth.user);
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        minHeight: 60,
+        py: 1,
+      }}
+      component="header"
+      {...props}
+    >
+      {props.children}
+      <ThemeSwitch sx={{ ml: 'auto', color: 'text.primary' }} />
+      <Box sx={{ ml: 3 }}>
+        {user ? (
+          <LogoutButton />
+        ) : (
+          <Avatar
+            sx={{ width: 32, height: 32 }}
+            component={Link}
+            to={routes.auth()}
+          />
+        )}
+      </Box>
+    </Box>
+  );
+};
 
 const Main = (props: BoxProps) => (
   <Box sx={{ flexGrow: 1 }} component="main" {...props} />
@@ -53,12 +72,12 @@ const Footer = (props: BoxProps) => (
       }}
     >
       View the{' '}
-      <Link
+      <Anchor
         color="text.primary"
         href="https://github.com/anorone/mini-paint/tree/dev"
       >
         source code
-      </Link>
+      </Anchor>
     </Typography>
   </Box>
 );

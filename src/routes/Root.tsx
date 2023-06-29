@@ -9,15 +9,10 @@ import { App } from '../components';
 const Root = () => {
   const dispatch = useTypedDispatch();
 
-  useEffect(() => {
-    return onAuthStateChanged(getAuth(), (user) => {
-      if (user) {
-        dispatch(setUser(user));
-      } else {
-        dispatch(setUser(null));
-      }
-    });
-  }, [dispatch]);
+  useEffect(
+    () => onAuthStateChanged(getAuth(), (user) => dispatch(setUser(user))),
+    [dispatch]
+  );
 
   return (
     <Container maxWidth="md">

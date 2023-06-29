@@ -4,6 +4,9 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useTypedSelector, useTypedDispatch } from '../hooks';
+import { signUp, resetRequestStatus } from '../slices/authSlice';
+import { ErrorMessage } from './';
 import type { SubmitHandler } from 'react-hook-form';
 
 interface Inputs {
@@ -16,11 +19,17 @@ interface Inputs {
 const SignupForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
   const inputRef = useRef<HTMLInputElement>(null);
+  const requestStatus = useTypedSelector((state) => state.auth.requestStatus);
+  const dispatch = useTypedDispatch();
 
   useEffect(() => inputRef.current?.focus(), []);
 
-  const onSignup: SubmitHandler<Inputs> = (values) => {
-    console.log(values);
+  useEffect(() => {
+    dispatch(resetRequestStatus());
+  }, [dispatch]);
+
+  const onSignup: SubmitHandler<Inputs> = (inputs) => {
+    dispatch(signUp(inputs));
   };
 
   return (
@@ -35,6 +44,7 @@ const SignupForm = () => {
             autoComplete="given-name"
             required
             fullWidth
+            error={requestStatus === 'failed'}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -45,6 +55,7 @@ const SignupForm = () => {
             autoComplete="family-name"
             required
             fullWidth
+            error={requestStatus === 'failed'}
           />
         </Grid>
         <Grid item xs={12}>
@@ -56,6 +67,7 @@ const SignupForm = () => {
             autoComplete="email"
             required
             fullWidth
+            error={requestStatus === 'failed'}
           />
         </Grid>
         <Grid item xs={12}>
@@ -68,13 +80,21 @@ const SignupForm = () => {
             autoComplete="new-password"
             required
             fullWidth
+            error={requestStatus === 'failed'}
           />
         </Grid>
         <Grid item xs={12}>
           <Button type="submit" variant="contained" size="large" fullWidth>
-            Sign Up
+            {requestStatus === 'loading' ? 'Submitting...' : 'Sign Up'}
           </Button>
         </Grid>
+        {requestStatus === 'failed' && (
+          <Grid item xs={12}>
+            <ErrorMessage>
+              Something went wrong. Check if your e-mail / password is correct.
+            </ErrorMessage>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );
