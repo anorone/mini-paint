@@ -6,6 +6,7 @@ import LogoutButton from './LogoutButton';
 import BouncingButton from './BouncingButton';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
+import ErrorMessage from './ErrorMessage';
 
 export {
   App,
@@ -15,6 +16,7 @@ export {
   AuthForm,
   LoginForm,
   SignupForm,
+  ErrorMessage,
   Logo,
   LogoutButton,
   BouncingButton,

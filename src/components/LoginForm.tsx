@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useTypedSelector, useTypedDispatch } from '../hooks';
 import { logIn, resetRequestStatus } from '../slices/authSlice';
+import { ErrorMessage } from './';
 import type { SubmitHandler } from 'react-hook-form';
 
 interface Inputs {
@@ -65,9 +65,9 @@ const LoginForm = () => {
         </Grid>
         {requestStatus === 'failed' && (
           <Grid item xs={12}>
-            <Typography variant="caption" display="block" align="center">
+            <ErrorMessage>
               Something went wrong. Check if your e-mail / password is correct.
-            </Typography>
+            </ErrorMessage>
           </Grid>
         )}
       </Grid>
