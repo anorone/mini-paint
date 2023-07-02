@@ -7,6 +7,7 @@ import BouncingButton from './BouncingButton';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import ErrorMessage from './ErrorMessage';
+import Drawings from './Drawings';
 
 export {
   App,
@@ -21,4 +22,5 @@ export {
   LogoutButton,
   BouncingButton,
   ThemeSwitch,
+  Drawings,
 };
