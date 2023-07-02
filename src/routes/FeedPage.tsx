@@ -4,9 +4,11 @@ import isEmpty from 'lodash/isEmpty';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
+import Anchor from '@mui/material/Link';
+import ErrorIcon from '@mui/icons-material/ErrorTwoTone';
 import { useTypedSelector, useTypedDispatch } from '../hooks';
 import { loadData } from '../slices/dataSlice';
-import { Header, Main, Logo, Drawings } from '../components';
+import { Header, Main, Logo, Drawings, ErrorMessage } from '../components';
 import { routes } from '../routes';
 
 const DRAWINGS_PER_PAGE = 6;
@@ -33,7 +35,24 @@ const FeedPage = () => {
         <Logo component={Link} to="/" />
       </Header>
       <Main py={9}>
-        {requestStatus !== 'failed' && (
+        {requestStatus === 'failed' ? (
+          <ErrorMessage sx={{ maxWidth: 300 }} variant="body1">
+            <ErrorIcon
+              sx={{ display: 'block', m: 'auto', mb: 3, fontSize: 64 }}
+              color="secondary"
+            />
+            No data available. This could happen if loading data from the server
+            failed. Try to{' '}
+            <Anchor
+              component={Link}
+              to={routes.feed(currentPageIndex)}
+              color="secondary"
+              onClick={() => dispatch(loadData())}
+            >
+              reload this page.
+            </Anchor>
+          </ErrorMessage>
+        ) : (
           <Drawings.List>
             {requestStatus === 'loading' &&
             (isEmpty(drawings) || isEmpty(users))
