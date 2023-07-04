@@ -6,9 +6,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import type { User } from 'firebase/auth';
-import type { Dispatch } from './';
+import type { Thunk } from './';
 
 interface Auth {
   user: User | null;
@@ -25,7 +25,7 @@ const initialState: Auth = {
   requestStatus: 'idle',
 };
 
-const subscribeToAuthStateChange = () => (dispatch: Dispatch) => {
+const subscribeToAuthStateChange = (): Thunk => (dispatch) => {
   const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
     dispatch(setUser(user));
   });
