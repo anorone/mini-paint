@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import isEmpty from 'lodash/isEmpty';
+import { Link, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
@@ -8,7 +7,7 @@ import Anchor from '@mui/material/Link';
 import ErrorIcon from '@mui/icons-material/ErrorTwoTone';
 import { useTypedSelector, useTypedDispatch } from '../hooks';
 import { loadData } from '../slices/dataSlice';
-import { Header, Main, Logo, Drawings, ErrorMessage } from '../components';
+import { Header, Main, Logo, FeedList, ErrorMessage } from '../components';
 import { routes } from '../routes';
 
 const DRAWINGS_PER_PAGE = 6;
@@ -17,8 +16,8 @@ const FeedPage = () => {
   const users = useTypedSelector((state) => state.data.users);
   const drawings = useTypedSelector((state) => state.data.drawings);
   const requestStatus = useTypedSelector((state) => state.data.requestStatus);
+  const [searchParams] = useSearchParams();
   const dispatch = useTypedDispatch();
-  const location = useLocation();
 
   useEffect(() => {
     dispatch(loadData());
@@ -26,7 +25,6 @@ const FeedPage = () => {
 
   const pagesCount = Math.ceil(drawings.length / DRAWINGS_PER_PAGE);
 
-  const searchParams = new URLSearchParams(location.search);
   const currentPageIndex = Number(searchParams.get('page') ?? '1') - 1;
 
   return (
@@ -49,28 +47,16 @@ const FeedPage = () => {
             </Anchor>
           </ErrorMessage>
         ) : (
-          <Drawings.List>
-            {requestStatus === 'loading' &&
-            (isEmpty(drawings) || isEmpty(users))
-              ? Array.from({ length: DRAWINGS_PER_PAGE }, (_, i) => (
-                  <Drawings.Placeholder key={i} />
-                ))
-              : drawings
-                  .slice(
-                    currentPageIndex * DRAWINGS_PER_PAGE,
-                    (currentPageIndex + 1) * DRAWINGS_PER_PAGE
-                  )
-                  .map((drawing) => (
-                    <Drawings.Item
-                      data={drawing}
-                      users={users}
-                      key={drawing.id}
-                    />
-                  ))}
-          </Drawings.List>
+          <FeedList
+            drawings={drawings}
+            users={users}
+            pageSize={DRAWINGS_PER_PAGE}
+            currentPage={currentPageIndex}
+            loading={requestStatus === 'loading'}
+          />
         )}
 
-        {drawings.length !== 0 && (
+        {drawings.length > DRAWINGS_PER_PAGE && (
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
             <Pagination
               count={pagesCount}

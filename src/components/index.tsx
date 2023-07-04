@@ -8,6 +8,7 @@ import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import ErrorMessage from './ErrorMessage';
 import Drawings from './Drawings';
+import FeedList from './FeedList';
 
 export {
   App,
@@ -23,4 +24,5 @@ export {
   BouncingButton,
   ThemeSwitch,
   Drawings,
+  FeedList,
 };
