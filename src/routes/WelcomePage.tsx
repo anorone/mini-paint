@@ -11,7 +11,12 @@ const WelcomePage = () => (
       <Typography paragraph mb={3} fontSize={{ xs: '0.75rem', sm: '1.25rem' }}>
         stay alone with your endless imagination
       </Typography>
-      <BouncingButton variant="contained" component={Link} to={routes.auth()}>
+      <BouncingButton
+        variant="contained"
+        component={Link}
+        to={routes.auth()}
+        state={{ authType: 'signup' }}
+      >
         Start Now
       </BouncingButton>
     </Main>

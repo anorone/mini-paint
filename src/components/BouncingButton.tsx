@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import type { ButtonProps } from '@mui/material/Button';
+import type { AuthType } from './AuthForm';
 
 const cssAnimation = {
   '@keyframes bounce': {
@@ -17,7 +18,7 @@ const cssAnimation = {
 };
 
 const BouncingButton = <L extends React.ElementType>(
-  props: ButtonProps<L, { component: L }>
+  props: ButtonProps<L, { component?: L; state?: { authType: AuthType } }>
 ) => <Button sx={cssAnimation} {...props} />;
 
 export default BouncingButton;
