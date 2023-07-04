@@ -24,7 +24,7 @@ const router = createBrowserRouter(
 
 const routes = {
   auth: () => '/auth',
-  feed: () => '/feed',
+  feed: (page?: number | null) => (page ? `/feed?page=${page}` : '/feed'),
 };
 
 export { routes };
