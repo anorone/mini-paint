@@ -36,11 +36,7 @@ const FeedPage = () => {
       </Header>
       <Main py={9}>
         {requestStatus === 'failed' ? (
-          <ErrorMessage sx={{ maxWidth: 300 }} variant="body1">
-            <ErrorIcon
-              sx={{ display: 'block', m: 'auto', mb: 3, fontSize: 64 }}
-              color="secondary"
-            />
+          <ErrorMessage sx={{ maxWidth: 300 }} icon={ErrorIcon}>
             No data available. This could happen if loading data from the server
             failed. Try to{' '}
             <Anchor

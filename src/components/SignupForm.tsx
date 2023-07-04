@@ -90,7 +90,7 @@ const SignupForm = () => {
         </Grid>
         {requestStatus === 'failed' && (
           <Grid item xs={12}>
-            <ErrorMessage>
+            <ErrorMessage variant="caption">
               Something went wrong. Check if your e-mail / password is correct.
             </ErrorMessage>
           </Grid>
