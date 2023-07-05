@@ -26,7 +26,9 @@ const Header = (props: BoxProps) => {
     <Box
       sx={{
         display: 'flex',
+        flexWrap: 'wrap',
         alignItems: 'center',
+        rowGap: 2,
         minHeight: 60,
         py: 1,
       }}
