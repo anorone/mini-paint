@@ -6,18 +6,24 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { addUser } from '../api/users';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import type { User } from 'firebase/auth';
-import type { Dispatch } from './';
+import type { Thunk } from './';
 
 interface Auth {
   user: User | null;
   requestStatus: 'idle' | 'loading' | 'failed';
 }
 
-interface Credentials {
+interface LoginData {
   email: string;
   password: string;
+}
+
+interface SignupData extends LoginData {
+  firstName: string;
+  lastName: string;
 }
 
 const initialState: Auth = {
@@ -25,7 +31,7 @@ const initialState: Auth = {
   requestStatus: 'idle',
 };
 
-const subscribeToAuthStateChange = () => (dispatch: Dispatch) => {
+const subscribeToAuthStateChange = (): Thunk => (dispatch) => {
   const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
     dispatch(setUser(user));
   });
@@ -34,15 +40,20 @@ const subscribeToAuthStateChange = () => (dispatch: Dispatch) => {
 
 const logIn = createAsyncThunk(
   'auth/login',
-  async ({ email, password }: Credentials) => {
+  async ({ email, password }: LoginData) => {
     await signInWithEmailAndPassword(getAuth(), email, password);
   }
 );
 
 const signUp = createAsyncThunk(
   'auth/signup',
-  async ({ email, password }: Credentials) => {
-    await createUserWithEmailAndPassword(getAuth(), email, password);
+  async ({ email, password, firstName, lastName }: SignupData) => {
+    const { user } = await createUserWithEmailAndPassword(
+      getAuth(),
+      email,
+      password
+    );
+    await addUser({ id: user.uid, firstName, lastName });
   }
 );
 
