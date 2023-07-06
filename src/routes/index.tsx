@@ -24,7 +24,13 @@ const router = createBrowserRouter(
 
 const routes = {
   auth: () => '/auth',
-  feed: (page?: number | null) => (page ? `/feed?page=${page}` : '/feed'),
+  feed: (params: Record<string, string | number | null> = {}) => {
+    const entries = Object.entries(params)
+      .filter(([_, value]) => value)
+      .map(([key, value]) => [key, value!.toString()]);
+    const searchParams = new URLSearchParams(entries).toString();
+    return searchParams ? `/feed?${searchParams}` : '/feed';
+  },
 };
 
 export { routes };

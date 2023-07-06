@@ -8,10 +8,9 @@ const AuthPage = () => {
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.state?.from?.search);
-  const previousPage = searchParams.get('page');
 
   return user ? (
-    <Navigate to={routes.feed(Number(previousPage))} />
+    <Navigate to={routes.feed(Object.fromEntries(searchParams))} />
   ) : (
     <>
       <Header>

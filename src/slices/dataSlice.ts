@@ -2,17 +2,17 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loadUsers } from '../api/users';
 import { loadDrawings } from '../api/drawings';
 import type { Users } from '../api/users';
-import type { Drawing } from '../api/drawings';
+import type { Drawings } from '../api/drawings';
 
 interface Data {
   users: Users;
-  drawings: Drawing[];
+  drawings: Drawings;
   requestStatus: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: Data = {
   users: {},
-  drawings: [],
+  drawings: {},
   requestStatus: 'idle',
 };
 
