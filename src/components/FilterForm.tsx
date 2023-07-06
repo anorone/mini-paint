@@ -3,17 +3,16 @@ import { Form, useSubmit } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import type { BoxProps } from '@mui/material/Box';
 
 interface Option {
   label: string;
   id: string;
 }
 
-type Props = BoxProps & {
+interface Props {
   options: Option[];
   selectedOption: Option | null;
-};
+}
 
 const FilterForm = ({ options, selectedOption }: Props) => {
   const [option, setOption] = useState<Option | null>(selectedOption);
