@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, useSubmit } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -12,18 +12,19 @@ interface Option {
 
 type Props = BoxProps & {
   options: Option[];
+  selectedOption: Option | null;
 };
 
-const FilterForm = (props: Props) => {
-  const formRef = useRef<HTMLFormElement>();
+const FilterForm = ({ options, selectedOption }: Props) => {
+  const [option, setOption] = useState<Option | null>(selectedOption);
   const submit = useSubmit();
 
-  const handleSelect = (_: any, selectedValue: Option | null) => {
-    const formData = new FormData(formRef.current);
-    if (selectedValue) {
-      formData.set('filterId', selectedValue.id);
-    }
-    submit(formData);
+  useEffect(() => setOption(selectedOption), [selectedOption]);
+
+  const handleSelect = (_: any, value: Option | null) => {
+    const searchParams = new URLSearchParams();
+    if (value) searchParams.set('filterId', value.id);
+    submit(searchParams);
   };
 
   return (
@@ -34,12 +35,13 @@ const FilterForm = (props: Props) => {
         width: { xs: 1, sm: 200 },
       }}
       component={Form}
-      ref={formRef}
     >
       <Autocomplete
-        options={props.options}
+        options={options}
         size="small"
+        value={option}
         onChange={handleSelect}
+        isOptionEqualToValue={(opt, val) => opt.id === val.id}
         renderInput={(params) => (
           <TextField
             {...params}

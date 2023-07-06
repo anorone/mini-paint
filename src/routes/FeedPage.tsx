@@ -55,7 +55,12 @@ const FeedPage = () => {
     <>
       <Header>
         <Logo component={Link} to="/" mr={6} />
-        <FilterForm options={filterOptions} />
+        <FilterForm
+          options={filterOptions}
+          selectedOption={
+            filterOptions.find((opt) => opt.id === filterId) ?? null
+          }
+        />
       </Header>
       <Main py={9}>
         {requestStatus === 'failed' ? (
