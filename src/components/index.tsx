@@ -10,6 +10,7 @@ import FilterForm from './FilterForm';
 import Message from './Message';
 import Drawings from './Drawings';
 import FeedList from './FeedList';
+import Editor from './Editor';
 
 export {
   App,
@@ -27,4 +28,5 @@ export {
   ThemeSwitch,
   Drawings,
   FeedList,
+  Editor,
 };
