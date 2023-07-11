@@ -3,7 +3,9 @@ import { Link, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
+import Button from '@mui/material/Button';
 import Anchor from '@mui/material/Link';
+import Divider from '@mui/material/Divider';
 import ErrorIcon from '@mui/icons-material/ErrorTwoTone';
 import { useTypedSelector, useTypedDispatch } from '../hooks';
 import { loadData } from '../slices/dataSlice';
@@ -62,7 +64,27 @@ const FeedPage = () => {
           }
         />
       </Header>
-      <Main py={9}>
+      <Main pb={9}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: { xs: 'center', sm: 'flex-end' },
+            alignItems: 'center',
+            minHeight: 70,
+          }}
+        >
+          <Button
+            component={Link}
+            to={routes.editor()}
+            variant="contained"
+            color="secondary"
+          >
+            New Drawing
+          </Button>
+        </Box>
+
+        <Divider sx={{ mb: 4 }} />
+
         {requestStatus === 'failed' ? (
           <Message sx={{ maxWidth: 300 }} icon={ErrorIcon}>
             No data available. This could happen if loading data from the server
