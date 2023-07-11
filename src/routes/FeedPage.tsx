@@ -13,7 +13,7 @@ import {
   Logo,
   FilterForm,
   FeedList,
-  ErrorMessage,
+  Message,
 } from '../components';
 import { routes } from '../routes';
 
@@ -64,7 +64,7 @@ const FeedPage = () => {
       </Header>
       <Main py={9}>
         {requestStatus === 'failed' ? (
-          <ErrorMessage sx={{ maxWidth: 300 }} icon={ErrorIcon}>
+          <Message sx={{ maxWidth: 300 }} icon={ErrorIcon}>
             No data available. This could happen if loading data from the server
             failed. Try to{' '}
             <Anchor
@@ -75,7 +75,7 @@ const FeedPage = () => {
             >
               reload this page.
             </Anchor>
-          </ErrorMessage>
+          </Message>
         ) : (
           <FeedList
             drawings={filteredDrawings}
