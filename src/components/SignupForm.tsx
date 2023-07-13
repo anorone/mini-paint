@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useTypedSelector, useTypedDispatch } from '../hooks';
 import { signUp, resetRequestStatus } from '../slices/authSlice';
-import { ErrorMessage } from './';
+import { Message } from './';
 import type { SubmitHandler } from 'react-hook-form';
 
 interface Inputs {
@@ -90,9 +90,9 @@ const SignupForm = () => {
         </Grid>
         {requestStatus === 'failed' && (
           <Grid item xs={12}>
-            <ErrorMessage variant="caption">
+            <Message variant="caption">
               Something went wrong. Check if your e-mail / password is correct.
-            </ErrorMessage>
+            </Message>
           </Grid>
         )}
       </Grid>

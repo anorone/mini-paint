@@ -19,8 +19,8 @@ const refs = {
 };
 
 const addUser = async ({ id, firstName, lastName }: User) => {
-  const user = { id, firstName, lastName, drawings: {} };
-  await set(refs.user(id), user);
+  const user = { id: id.slice(-4), firstName, lastName, drawings: {} };
+  await set(refs.user(user.id), user);
   return user as User;
 };
 

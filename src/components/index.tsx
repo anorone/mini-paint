@@ -7,9 +7,10 @@ import BouncingButton from './BouncingButton';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import FilterForm from './FilterForm';
-import ErrorMessage from './ErrorMessage';
+import Message from './Message';
 import Drawings from './Drawings';
 import FeedList from './FeedList';
+import Editor from './Editor';
 
 export {
   App,
@@ -20,11 +21,12 @@ export {
   LoginForm,
   SignupForm,
   FilterForm,
-  ErrorMessage,
+  Message,
   Logo,
   LogoutButton,
   BouncingButton,
   ThemeSwitch,
   Drawings,
   FeedList,
+  Editor,
 };
