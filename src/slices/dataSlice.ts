@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loadUsers } from '../api/users';
-import { loadDrawings } from '../api/drawings';
+import { addDrawing, loadDrawings } from '../api/drawings';
 import type { Users } from '../api/users';
-import type { Drawings } from '../api/drawings';
+import type { Drawings, Drawing } from '../api/drawings';
 
 interface Data {
   users: Users;
@@ -15,6 +15,13 @@ const initialState: Data = {
   drawings: {},
   requestStatus: 'idle',
 };
+
+const saveDrawing = createAsyncThunk(
+  'data/saveDrawing',
+  async (drawing: Partial<Drawing>) => {
+    await addDrawing(drawing);
+  }
+);
 
 const loadData = createAsyncThunk('data/load', async () => {
   const users = await loadUsers();
@@ -42,5 +49,5 @@ const drawingsSlice = createSlice({
   },
 });
 
-export { loadData };
+export { saveDrawing, loadData };
 export default drawingsSlice.reducer;
