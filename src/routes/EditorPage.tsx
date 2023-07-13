@@ -54,7 +54,7 @@ const EditorPage = () => {
           </Tooltip>
         </Box>
 
-        <Divider sx={{ mb: 4 }} />
+        <Divider sx={{ mb: 2 }} />
 
         {isMobileDevice ? (
           <Message icon={InfoOutlined}>
