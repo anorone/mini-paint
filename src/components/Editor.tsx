@@ -28,7 +28,6 @@ const Editor = () => {
         isButtonPressed: true,
         clickCoordinates: { x, y },
         coordinates: { x, y },
-        image: canvasRef.current!.toDataURL(),
       })
     );
   };
@@ -39,6 +38,7 @@ const Editor = () => {
         isButtonPressed: false,
         clickCoordinates: null,
         coordinates: null,
+        image: canvasRef.current!.toDataURL(),
       })
     );
   };

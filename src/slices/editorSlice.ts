@@ -104,6 +104,8 @@ const initEditor =
     ctx.fillStyle = CANVAS_BGCOLOR;
     ctx.fillRect(0, 0, width, height);
 
+    dispatch(updateEditor({ image: canvas.toDataURL() }));
+
     const loop = () => {
       const { editor } = getState();
       if (editor.isButtonPressed) {
