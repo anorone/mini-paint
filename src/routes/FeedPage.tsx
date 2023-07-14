@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import reverse from 'lodash/reverse';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
@@ -100,7 +101,7 @@ const FeedPage = () => {
           </Message>
         ) : (
           <FeedList
-            drawings={filteredDrawings}
+            drawings={reverse(filteredDrawings)}
             users={users}
             pageSize={DRAWINGS_PER_PAGE}
             currentPage={currentPageIndex}
