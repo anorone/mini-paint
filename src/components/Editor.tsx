@@ -70,7 +70,9 @@ const Editor = () => {
       >
         <ToggleButtonGroup
           value={editor.tool}
-          onChange={(_, value) => dispatch(updateEditor({ tool: value }))}
+          onChange={(_, value) => {
+            if (value) dispatch(updateEditor({ tool: value }));
+          }}
           size="small"
           exclusive
         >
