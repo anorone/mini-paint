@@ -1,10 +1,11 @@
-import { getDatabase, ref, get, set } from 'firebase/database';
+import { get, set } from 'firebase/database';
+import refs from './refs';
 
 interface User {
   id: string;
   firstName: string;
   lastName: string;
-  drawings?: {
+  drawings: {
     [id: string]: boolean;
   };
 }
@@ -13,13 +14,8 @@ interface Users {
   [id: User['id']]: User;
 }
 
-const refs = {
-  users: () => ref(getDatabase(), 'users'),
-  user: (id: string) => ref(getDatabase(), `users/${id}`),
-};
-
-const addUser = async ({ id, firstName, lastName }: User) => {
-  const user = { id: id.slice(-4), firstName, lastName, drawings: {} };
+const addUser = async (data: Partial<User>) => {
+  const user = { ...data, id: data.id!.slice(-4), drawings: {} };
   await set(refs.user(user.id), user);
   return user as User;
 };
