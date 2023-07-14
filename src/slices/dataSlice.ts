@@ -7,7 +7,7 @@ import type { Drawings, Drawing } from '../api/drawings';
 interface Data {
   users: Users;
   drawings: Drawings;
-  requestStatus: 'idle' | 'loading' | 'failed';
+  requestStatus: 'idle' | 'loading' | 'failed' | 'succeeded';
 }
 
 const initialState: Data = {
@@ -29,25 +29,41 @@ const loadData = createAsyncThunk('data/load', async () => {
   return { users, drawings };
 });
 
-const drawingsSlice = createSlice({
+const dataSlice = createSlice({
   name: 'data',
   initialState,
-  reducers: {},
+  reducers: {
+    resetRequestStatus: (state) => {
+      state.requestStatus = 'idle';
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(loadData.pending, (state) => {
-        state.requestStatus = 'loading';
+      .addCase(saveDrawing.fulfilled, (state) => {
+        state.requestStatus = 'succeeded';
       })
       .addCase(loadData.fulfilled, (state, { payload }) => {
         state.users = payload.users;
         state.drawings = payload.drawings;
         state.requestStatus = 'idle';
-      })
-      .addCase(loadData.rejected, (state) => {
-        state.requestStatus = 'failed';
       });
+
+    builder
+      .addMatcher(
+        ({ type }) => type.startsWith('data/') && type.endsWith('/pending'),
+        (state) => {
+          state.requestStatus = 'loading';
+        }
+      )
+      .addMatcher(
+        ({ type }) => type.startsWith('data/') && type.endsWith('/rejected'),
+        (state) => {
+          state.requestStatus = 'failed';
+        }
+      );
   },
 });
 
+export const { resetRequestStatus } = dataSlice.actions;
 export { saveDrawing, loadData };
-export default drawingsSlice.reducer;
+export default dataSlice.reducer;
