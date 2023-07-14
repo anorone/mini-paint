@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Thunk } from './';
 
-type Tool = 'brush' | Shape | 'line';
+type Tool = 'brush' | Shape | 'line' | 'eraser';
 
 type Shape = 'circle' | 'rectangle';
 
@@ -52,6 +52,11 @@ const drawStripe: DrawerFunction = (ctx, editor) => {
   ctx.fill();
 };
 
+const erasePath: DrawerFunction = (ctx, editor) => {
+  ctx.fillStyle = CANVAS_BGCOLOR;
+  drawStripe(ctx, editor);
+};
+
 const drawRect: DrawerFunction = (ctx, editor) => {
   restoreImage(ctx, editor);
   const { x: clickX, y: clickY } = editor.clickCoordinates!;
@@ -86,6 +91,7 @@ const map: Record<Tool, DrawerFunction> = {
   rectangle: drawRect,
   circle: drawCircle,
   line: drawLine,
+  eraser: erasePath,
 };
 
 const initEditor =

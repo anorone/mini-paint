@@ -5,10 +5,12 @@ import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
+import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import BrushIcon from '@mui/icons-material/Brush';
 import CircleIcon from '@mui/icons-material/CircleOutlined';
 import SquareIcon from '@mui/icons-material/SquareOutlined';
+import CleaningIcon from '@mui/icons-material/CleaningServices';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import { useTypedSelector, useTypedDispatch } from '../hooks';
 import { initEditor, updateEditor } from '../slices/editorSlice';
@@ -84,6 +86,9 @@ const Editor = () => {
           <ToggleButton value="rectangle">
             <SquareIcon />
           </ToggleButton>
+          <ToggleButton value="eraser">
+            <CleaningIcon />
+          </ToggleButton>
         </ToggleButtonGroup>
 
         <Divider sx={{ mx: 2 }} orientation="vertical" flexItem />
@@ -112,6 +117,17 @@ const Editor = () => {
           valueLabelDisplay="auto"
           color="secondary"
         />
+
+        <Divider sx={{ mx: 2 }} orientation="vertical" flexItem />
+
+        <Button
+          sx={{ minWidth: 90 }}
+          variant="outlined"
+          color="secondary"
+          onClick={() => dispatch(initEditor(canvasRef.current!))}
+        >
+          Reset
+        </Button>
       </Box>
 
       <Paper
