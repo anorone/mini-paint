@@ -23,7 +23,7 @@ const DrawingList = (props: GridProps) => (
 );
 
 const DrawingItem = (props: DrawingItemProps) => {
-  const { authorId, dataUrl, timestamp } = props.data;
+  const { authorId, dataUrl, name } = props.data;
   const { users } = props;
   const author = users[authorId];
 
@@ -33,7 +33,7 @@ const DrawingItem = (props: DrawingItemProps) => {
         <CardHeader
           sx={{ flexGrow: 1, alignItems: 'flex-start' }}
           title={`${author.firstName} ${author.lastName}`}
-          subheader={new Date(timestamp).toLocaleDateString()}
+          subheader={name}
         />
         <CardMedia component="img" image={dataUrl || fallbackImage} />
       </Card>
