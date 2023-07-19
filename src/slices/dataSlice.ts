@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loadUsers } from '../api/users';
-import { loadDrawings } from '../api/drawings';
+import { addDrawing, loadDrawings } from '../api/drawings';
 import type { Users } from '../api/users';
-import type { Drawings } from '../api/drawings';
+import type { Drawings, Drawing } from '../api/drawings';
 
 interface Data {
   users: Users;
   drawings: Drawings;
-  requestStatus: 'idle' | 'loading' | 'failed';
+  requestStatus: 'idle' | 'loading' | 'failed' | 'succeeded';
 }
 
 const initialState: Data = {
@@ -16,31 +16,54 @@ const initialState: Data = {
   requestStatus: 'idle',
 };
 
+const saveDrawing = createAsyncThunk(
+  'data/saveDrawing',
+  async (drawing: Partial<Drawing>) => {
+    await addDrawing(drawing);
+  }
+);
+
 const loadData = createAsyncThunk('data/load', async () => {
   const users = await loadUsers();
   const drawings = await loadDrawings();
   return { users, drawings };
 });
 
-const drawingsSlice = createSlice({
+const dataSlice = createSlice({
   name: 'data',
   initialState,
-  reducers: {},
+  reducers: {
+    resetRequestStatus: (state) => {
+      state.requestStatus = 'idle';
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(loadData.pending, (state) => {
-        state.requestStatus = 'loading';
+      .addCase(saveDrawing.fulfilled, (state) => {
+        state.requestStatus = 'succeeded';
       })
       .addCase(loadData.fulfilled, (state, { payload }) => {
         state.users = payload.users;
         state.drawings = payload.drawings;
         state.requestStatus = 'idle';
-      })
-      .addCase(loadData.rejected, (state) => {
-        state.requestStatus = 'failed';
       });
+
+    builder
+      .addMatcher(
+        ({ type }) => type.startsWith('data/') && type.endsWith('/pending'),
+        (state) => {
+          state.requestStatus = 'loading';
+        }
+      )
+      .addMatcher(
+        ({ type }) => type.startsWith('data/') && type.endsWith('/rejected'),
+        (state) => {
+          state.requestStatus = 'failed';
+        }
+      );
   },
 });
 
-export { loadData };
-export default drawingsSlice.reducer;
+export const { resetRequestStatus } = dataSlice.actions;
+export { saveDrawing, loadData };
+export default dataSlice.reducer;
